@@ -320,3 +320,33 @@ document.body.addEventListener('htmx:configRequest', (evt) => {
     evt.detail.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate';
     evt.detail.headers['Pragma'] = 'no-cache';
 });
+
+// Update browser title with todo count
+function updateBrowserTitle() {
+    const listContent = document.getElementById('list-content');
+    if (listContent) {
+        const listName = listContent.dataset.listName;
+        const listId = listContent.dataset.listId;
+        
+        // Count incomplete todos
+        const incompleteTodos = document.querySelectorAll('#todos-list .todo-item:not(.completed)').length;
+        
+        // Update title based on count
+        if (incompleteTodos > 0) {
+            document.title = `(${incompleteTodos}) ${listName} - Todo App`;
+        } else {
+            document.title = `${listName} - Todo App`;
+        }
+    }
+}
+
+// Update title on page load and after HTMX swaps
+document.addEventListener('DOMContentLoaded', updateBrowserTitle);
+document.body.addEventListener('htmx:afterSwap', (evt) => {
+    // Update title when main content or todos list changes
+    if (evt.detail.target.id === 'main-content' || 
+        evt.detail.target.id === 'todos-list' ||
+        evt.detail.target.classList.contains('todo-item')) {
+        updateBrowserTitle();
+    }
+});
