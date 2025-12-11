@@ -102,6 +102,7 @@ async def app_page(
             "lists": lists,
             "active_list": None,
             "todos": [],
+            "incomplete_count": 0,
         },
     )
 

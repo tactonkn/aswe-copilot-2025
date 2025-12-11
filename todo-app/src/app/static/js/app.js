@@ -326,7 +326,6 @@ function updateBrowserTitle() {
     const listContent = document.getElementById('list-content');
     if (listContent) {
         const listName = listContent.dataset.listName;
-        const listId = listContent.dataset.listId;
         
         // Count incomplete todos
         const incompleteTodos = document.querySelectorAll('#todos-list .todo-item:not(.completed)').length;
