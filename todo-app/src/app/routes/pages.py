@@ -102,6 +102,7 @@ async def app_page(
             "lists": lists,
             "active_list": None,
             "todos": [],
+            "incomplete_count": 0,
         },
     )
 
@@ -147,6 +148,9 @@ async def app_list_page(
         .all()
     )
 
+    # Count incomplete todos
+    incomplete_count = sum(1 for todo in todos if not todo.is_completed)
+
     return templates.TemplateResponse(
         request=request,
         name="app.html",
@@ -155,5 +159,6 @@ async def app_list_page(
             "lists": lists,
             "active_list": active_list,
             "todos": todos,
+            "incomplete_count": incomplete_count,
         },
     )
